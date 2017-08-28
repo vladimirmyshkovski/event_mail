@@ -1,0 +1,12 @@
+{% extends 'event_email/base.html' %}
+{% block content %}
+  <form class="form-horizontal" method="post" action="{% url 'event_email:EmailTemplate_create' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="control-group">
+      <div class="controls">
+        <button type="submit" class="btn">Create</button>
+      </div>
+    </div>
+  </form>
+{% endblock content %}
