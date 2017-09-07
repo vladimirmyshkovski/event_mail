@@ -26,23 +26,13 @@ def pixel(context):
             "path": context['request'].get_full_path(),
             "content_type": context['object'].__class__.__name__,
             "content_id": context['object'].id,
-            "timestamp": timezone.now(), #.strftime('%Y %m %d %H:%M:%S'),
-            "token": token
+            "timestamp": timezone.now().isoformat()#.strftime('%Y %m %d %H:%M:%S'),
         }
 
-        print('DATA IS : ' + str(data))
-        print('DATA JSON DUMPS : ' + str(json.dumps(data)))
-        pixel = signing.dumps(json.dumps(data, separators=(',', ':')), compress=True)
-        #pixel = signing.dumps(
-        #    data, serializer=PixelJSONSerializer, compress=True)
-        print('PIXEL AFTER SIGING :' + str(pixel))
+        pixel = signing.dumps(
+            json.dumps(data, separators=(',', ':')), compress=True)
     if dont_track(context['request']):
-        print('dont track')
-        print(pixel)
-        return {
-            'pixel_url': pixel
-            }
-        #pass
+        pass
     else:
         return {
             'pixel_url': pixel

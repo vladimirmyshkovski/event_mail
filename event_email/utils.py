@@ -1,14 +1,11 @@
 import string
 import random
-import json
 from django.core import signing
 from django.core.signing import BadSignature, SignatureExpired
-from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.dateparse import parse_datetime
 from .signals import pixel_data
 import logging
-
-
+import json
 logger = logging.getLogger(__name__)
 
 
@@ -48,16 +45,14 @@ def decode_pixel(tracking_pixel):
     """
 
     pixel = None
-    print('TRACKING PIXEL: ' + str(tracking_pixel))
     try:
-        pixel = signing.loads(tracking_pixel)
-        print(pixel)
+        pixel = signing.loads(
+            tracking_pixel, max_age=10)    
     except SignatureExpired:
         logger.exception("pixel expired")
     except BadSignature:
         logger.exception("pixel invalid")
-        print('PIXEL AFTER DECODE :' + str(pixel))
-    print(pixel)
-    if json.loads(pixel, compress=True):
+    pixel = json.loads(pixel)
+    if pixel:
         pixel['timestamp'] = parse_datetime(pixel['timestamp'])
         pixel_data.send(sender='decode_pixel', pixel_data=pixel)

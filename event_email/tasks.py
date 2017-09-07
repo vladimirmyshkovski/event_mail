@@ -6,17 +6,26 @@ from django.core.mail import send_mail
 from celery import shared_task
 from django_celery_beat.models import PeriodicTask, IntervalSchedule
 import json
-
+from django.core.mail import EmailMessage
 
 @shared_task
-def send_event_mail(html, subject, sender, recipients):
-	send_mail(
+def send_event_mail(html, text, subject, sender, recipients):
+	#send_mail(
+	#	subject,
+	#	html,
+	#	sender,
+	#	recipients
+	#	fail_silently=False,
+	#	)
+	mail = EmailMessage(
 		subject,
-		html,
+		text,
 		sender,
-		recipients
+		recipients,
 		fail_silently=False,
 		)
+	mail.attach_alternative(html, "text/html")
+	mail.send()
 
 
 @receiver(post_save, sender=Schedule)
@@ -25,6 +34,7 @@ def schedule_task(sender, instance, created, **kwargs):
 		if instance.sending_frequency == 'One time':
 			send_event_mail.delay(
 				html = instance.email_template.html,
+				text = instance.email_template.text,
 				subject = instance.email_template.subject,
 				sender = instance.user.email,
 				recipients = [r for r in instance.recipients.all()],
@@ -49,6 +59,7 @@ def schedule_task(sender, instance, created, **kwargs):
 				task='event_email.tasks.send_event_email',
 				args=json.dumps([
 					instance.email_template.html,
+					instance.email_template.text,
 					instance.email_template.subject,
 					instance.user.email,
 					[r for r in instance.recipients.all()],

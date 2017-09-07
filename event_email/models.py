@@ -26,6 +26,7 @@ from .utils import event_email_directory_path
 from django.core.files import File
 from bs4 import BeautifulSoup
 import os
+from django.utils.safestring import mark_safe
 
 @python_2_unicode_compatible
 class Event(TimeStampedModel):
@@ -64,11 +65,13 @@ class EmailTemplate(TimeStampedModel):
 		# Check exist file in self.source
 		if not self.source:
 			# Write html with needed template tags 
-			html = str('{%') +  """ extends 'base_email.html' """ + str('%}') + """
-				   """ + str('{%') + """ block content """ + str('%}') + """
-				   {}
-				   """.format(self.html) + str('{%') + """ endblock content """ + str('%}') + """
-				   """
+			html = mark_safe(
+					"""{% extends 'base_email.html' %}
+				   	{% block content %} 
+				   	{}
+				   	{% endblock content %}
+				   	""".format(self.html)
+				   )
 			# Create path
 			file_path = event_email_directory_path(self, self.template_name)
 			# Create new HTML file

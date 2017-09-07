@@ -149,11 +149,6 @@ def tracking_pixel(request, tracking_pixel):
     signal with the data encoded in the pixel url.
     Returns a 204 No Content http response to save bandwidth.
     """
-    '''
-    email = get_object_or_None(Email, token=token)
-    if email:
-        email.status = 'Opened'
-        email.save()
-    '''
-    decode_pixel(tracking_pixel)
+    pixel = tracking_pixel.split('/')[-1]
+    decode_pixel(pixel)
     return HttpResponse(status=204)
