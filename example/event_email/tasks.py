@@ -7,6 +7,8 @@ from celery import shared_task
 from django_celery_beat.models import PeriodicTask, IntervalSchedule
 import json
 from django.core.mail import EmailMessage
+from annoying.functions import get_object_or_None
+
 
 @shared_task
 def send_event_mail(html, text, subject, sender, recipients):
@@ -69,7 +71,3 @@ def schedule_task(sender, instance, created, **kwargs):
 					}),
 				expires=None,
 				)
-
-
-
-

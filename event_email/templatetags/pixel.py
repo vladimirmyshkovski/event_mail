@@ -2,7 +2,6 @@ from django.utils import timezone
 from django import template
 from django.core import signing
 from ..utils import dont_track
-from annoying.functions import get_object_or_None
 import json
 
 register = template.Library()
@@ -26,7 +25,8 @@ def pixel(context):
             "path": context['request'].get_full_path(),
             "content_type": context['object'].__class__.__name__,
             "content_id": context['object'].id,
-            "timestamp": timezone.now().isoformat()#.strftime('%Y %m %d %H:%M:%S'),
+            "timestamp": timezone.now().isoformat(), #.strftime('%Y %m %d %H:%M:%S'),
+            "token": token,
         }
 
         pixel = signing.dumps(

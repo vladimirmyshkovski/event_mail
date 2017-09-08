@@ -26,7 +26,8 @@ from .utils import event_email_directory_path
 from django.core.files import File
 from bs4 import BeautifulSoup
 import os
-from django.utils.safestring import mark_safe
+from annoying.functions import get_object_or_None
+
 
 @python_2_unicode_compatible
 class Event(TimeStampedModel):
@@ -65,13 +66,10 @@ class EmailTemplate(TimeStampedModel):
 		# Check exist file in self.source
 		if not self.source:
 			# Write html with needed template tags 
-			html = mark_safe(
-					"""{% extends 'base_email.html' %}
-				   	{% block content %} 
-				   	{}
-				   	{% endblock content %}
-				   	""".format(self.html)
-				   )
+			html = ("""{%""" + """ extends 'base_email.html' """ + """%}""" +
+				   """%}""" + """ block content """ + """%}""" + 
+				   """{}""".format(self.html) +
+				   """%}""" + """ endblock content """ + """%}""")
 			# Create path
 			file_path = event_email_directory_path(self, self.template_name)
 			# Create new HTML file
@@ -173,6 +171,7 @@ class Schedule(TimeStampedModel):
 		return reverse('event_email:Schedule_detail', 
 			kwargs={'pk': self.pk})
 
+
 @python_2_unicode_compatible
 class Email(TimeStampedModel):
 	STATUS = Choices(
@@ -220,9 +219,15 @@ class Email(TimeStampedModel):
 		return reverse('event_email:Email_detail', 
 			kwargs={'pk': self.pk})
 
+
+
 @receiver(pixel_data)
 def example_receiver(**kwargs):
 	"""Example receiver of pixel_data signal."""
-
 	pixel_data = kwargs['pixel_data']
-	pprint(pixel_data)
+	if pixel_data['content_type'] == 'Email':
+		email = get_object_or_None(Email, pk = pixel_data['content_id'])
+		if email:
+			if email.token == pixel_data['token']:
+				email.status == 'Opened'
+				email.save()
