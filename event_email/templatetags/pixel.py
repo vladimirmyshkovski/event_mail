@@ -4,6 +4,7 @@ from django.core import signing
 from ..utils import dont_track
 import json
 
+
 register = template.Library()
 
 

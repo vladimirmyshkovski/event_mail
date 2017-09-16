@@ -26,6 +26,7 @@ from .utils import event_email_directory_path
 from django.core.files import File
 from bs4 import BeautifulSoup
 import os
+from django.utils.safestring import mark_safe
 from annoying.functions import get_object_or_None
 
 
