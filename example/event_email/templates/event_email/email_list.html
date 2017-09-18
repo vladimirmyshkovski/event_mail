@@ -1,0 +1,20 @@
+{% extends 'event_email/base.html' %}
+{% block content %}
+{% for email in emaillist %}
+<a href="{% url 'event_email:Email_detail' email.pk %}">
+<ul>
+<li>{{ email.user }}</li>
+<li>{{ email.recipient }}</li>
+<li>{{ email.event }}</li>
+<li>{{ email.template }}</li>
+<li>{{ email.schedule }}</li>
+<li>{{ email.status }}</li>
+<li>{{ email.status_changed }}</li>
+<li>{{ email.sent_at }}</li>
+<li>{{ email.opened_at }}</li>
+<li>{{ email.clicked_at }}</li>
+<li>{{ email.token }}</li>
+</ul>
+</a>
+{% endfor %}
+{% endblock content %}

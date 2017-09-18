@@ -1,0 +1,16 @@
+{% extends 'event_email/base_email.html' %}
+{% block content %}
+
+<p>{{ object.user }}</p>
+<p>{{ object.recipient }}</p>
+<p>{{ object.event }}</p>
+<p>{{ object.template }}</p>
+<p>{{ object.schedule }}</p>
+<p>{{ object.status }}</p>
+<p>{{ object.status_changed }}</p>
+<p>{{ object.sent_at }}</p>
+<p>{{ object.opened_at }}</p>
+<p>{{ object.clicked_at }}</p>
+<p>{{ object.token }}</p>
+
+{% endblock content %}

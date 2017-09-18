@@ -1,0 +1,14 @@
+{% extends 'event_email/base.html' %}
+
+{% block content %}
+{% for schedule in schedule_list %}
+<a href="{% url 'event_email:Schedule_detail' schedule.pk %}">
+<ul>
+<li>{{ schedule.sending_frequency }}</li>
+<li>{{ schedule.recipients }}</li>
+<li>{{ schedule.email_template }}</li>
+<li>{{ schedule.complete }}</li>
+</ul>
+</a>
+{% endfor %}
+{% endblock content %}

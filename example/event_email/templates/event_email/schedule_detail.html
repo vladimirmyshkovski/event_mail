@@ -1,0 +1,7 @@
+{% extends 'event_email/base.html' %}
+{% block content %}
+<p>{{ object.sending_frequency }}</p>
+<p>{{ object.recipients }}</p>
+<p>{{ object.email_template }}</p>
+<p>{{ object.complete }}</p>
+{% endblock content %}
