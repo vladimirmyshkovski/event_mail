@@ -1,0 +1,10 @@
+{% extends 'event_email/base.html' %}
+{% block content %}
+{% for event in eventlist %}
+<a href="{% url 'event_email:Event_detail' event.pk %}">
+<ul>
+<li>{{ event.text }}</li>
+</ul>
+</a>
+{% endfor %}
+{% endblock content %}
