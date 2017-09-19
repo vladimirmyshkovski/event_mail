@@ -32,7 +32,10 @@ from annoying.functions import get_object_or_None
 
 @python_2_unicode_compatible
 class Event(TimeStampedModel):
-	pass
+	text = models.CharField(max_length=55)
+
+	def __str__(self):
+		return self.text
 
 
 @python_2_unicode_compatible

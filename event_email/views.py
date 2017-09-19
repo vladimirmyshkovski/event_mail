@@ -12,7 +12,8 @@ from .models import (
     Email,
     EmailTemplate,
     Recipient,
-    Schedule
+    Schedule,
+    Event
 )
 
 from django.http import HttpResponse
@@ -23,6 +24,32 @@ from annoying.functions import get_object_or_None
 
 from .forms import EmailTemplateForm
 from django.core.files import File
+
+
+class EventCreateView(CreateView):
+
+    model = Event
+    fields = '__all__'
+
+
+class EventDeleteView(DeleteView):
+
+    model = Event
+
+
+class EventDetailView(DetailView):
+
+    model = Event
+
+
+class EventUpdateView(UpdateView):
+
+    model = Event
+
+
+class EventListView(ListView):
+
+    model = Event
 
 
 class EmailCreateView(CreateView):

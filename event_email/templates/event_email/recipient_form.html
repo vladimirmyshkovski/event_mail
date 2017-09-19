@@ -1,6 +1,6 @@
 {% extends 'event_email/base.html' %}
 {% block content %}
-  <form class="form-horizontal" method="post" action="{% url 'event_email:Email_create' %}">
+  <form class="form-horizontal" method="post" action="{% url 'event_email:Recipient_create' %}">
     {% csrf_token %}
     {{ form.as_p }}
     <div class="control-group">

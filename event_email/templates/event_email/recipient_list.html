@@ -1,0 +1,18 @@
+{% extends 'event_email/base.html' %}
+
+{% block content %}
+
+{% for recipient in recipient_list %}
+<a href="{% url 'event_email:Recipient_detail' recipient.pk %}">
+<ul>	
+	<li>{{ recipient.first_name }}</li>
+	<li>{{ recipient.last_name }}</li>
+	<li>{{ recipient.email_address }}</li>
+	<li>{{ recipient.phone_number }}</li>
+	<li>{{ recipient.location }}</li>
+	<li>{{ recipient.token }}</li>
+	<li>{{ recipient.subscribe }}</li>
+</ul>
+</a>
+{% endfor %}
+{% endblock content %}

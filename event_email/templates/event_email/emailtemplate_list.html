@@ -1,0 +1,10 @@
+{% extends 'event_email/base.html' %}
+{% block content %}
+
+{% for emailtemplate in emailtemplatelist %}
+
+	<a href="{% url 'event_email:EmailTemplate_detail' emailtemplate.pk %}">{{ emailtemplate.template_name}}</a>
+
+{% endfor %}
+
+{% endblock content %}
