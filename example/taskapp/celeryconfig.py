@@ -1,0 +1,2 @@
+CELERY_BROKER_URL = 'django://'
+CELERY_RESULT_BACKEND = 'redis://'

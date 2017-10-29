@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'event_email',
-    'taskapp',
+    'django_celery_beat'
 
     # if your app has other dependencies that need to be added to the site
     # they should be added here
@@ -130,5 +130,16 @@ ANYMAIL = {
     "MAILGUN_API_KEY": "<your Mailgun key>",
     "MAILGUN_SENDER_DOMAIN": 'mg.example.com',  # your Mailgun domain, if needed
 }
+
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
 DEFAULT_FROM_EMAIL = "you@example.com"  # if you don't already have this in settings
+
+
+########## CELERY
+INSTALLED_APPS += ['taskapp.celery.CeleryConfig']
+#CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='django://')
+#if CELERY_BROKER_URL == 'django://':
+#    CELERY_RESULT_BACKEND = 'redis://'
+#else:
+#    CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+########## END CELERY

@@ -12,13 +12,6 @@ from annoying.functions import get_object_or_None
 
 @shared_task
 def send_event_mail(html, text, subject, sender, recipients):
-	#send_mail(
-	#	subject,
-	#	html,
-	#	sender,
-	#	recipients
-	#	fail_silently=False,
-	#	)
 	mail = EmailMessage(
 		subject,
 		text,
@@ -48,7 +41,7 @@ def schedule_task(sender, instance, created, **kwargs):
 				period = 7
 			elif instance.sending_frequency == 'Monthly':
 				period = 30
-			else instance.sending_frequency == 'Yearly':
+			elif instance.sending_frequency == 'Yearly':
 				period = 365
 
 			schedule, created = IntervalSchedule.objects.get_or_create(
