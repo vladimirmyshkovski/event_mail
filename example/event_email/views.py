@@ -109,7 +109,11 @@ class EmailTemplateListView(ListView):
 class ScheduleCreateView(CreateView):
 
     model = Schedule
-    fields = '__all__'
+    fields = ['sending_frequency', 'recipients', 'email_template', 'complete']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(ScheduleCreateView, self).form_valid(form)
 
 
 class ScheduleDeleteView(DeleteView):

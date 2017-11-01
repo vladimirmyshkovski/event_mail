@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'event_email',
-    'django_celery_beat'
+    'django_celery_beat',
 
     # if your app has other dependencies that need to be added to the site
     # they should be added here

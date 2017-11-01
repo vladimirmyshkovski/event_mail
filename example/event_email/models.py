@@ -170,6 +170,10 @@ class Schedule(TimeStampedModel):
 	complete = models.BooleanField(default=False,
 		verbose_name=_('Complete')
 	)
+	user = models.ForeignKey(
+		settings.AUTH_USER_MODEL,
+		null=True
+	)
 
 	def get_absolute_url(self):
 		return reverse('event_email:Schedule_detail', 
